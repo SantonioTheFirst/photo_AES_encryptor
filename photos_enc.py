@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[51]:
+# In[1]:
 
 
 from Crypto.Cipher import AES
 from Crypto import Random
 
 
-# In[52]:
+# In[2]:
 
 
 # key = Random.new().read(AES.block_size)
@@ -18,10 +18,10 @@ from Crypto import Random
 # iv = b'O\t4\xb5\x11O\xd6\xf6\x0e\xe6<\xbax\xeb{k'
 
 
-# In[53]:
+# In[3]:
 
 
-def encrypt(input_data):
+def encrypt(input_data, key, iv):
     cfb_cipher = AES.new(key, AES.MODE_CFB, iv)
     enc_data = cfb_cipher.encrypt(input_data)
 
@@ -30,10 +30,10 @@ def encrypt(input_data):
     enc_file.close()
 
 
-# In[54]:
+# In[4]:
 
 
-def decrypt(encrypted_data):
+def decrypt(encrypted_data, key, iv):
     cfb_decipher = AES.new(key, AES.MODE_CFB, iv)
     plain_data = cfb_decipher.decrypt(encrypted_data)
 
@@ -42,7 +42,7 @@ def decrypt(encrypted_data):
     output_file.close()
 
 
-# In[1]:
+# In[5]:
 
 
 def main():
@@ -60,12 +60,12 @@ def main():
         input_file = open("photo.jpg", "rb")
         input_data = input_file.read()
         input_file.close()
-        encrypt(input_data)
+        encrypt(input_data, key, iv)
     elif flag == 1:
         enc_file = open("out_e.enc", "rb")
         encrypted_data = enc_file.read()
         enc_file.close()
-        decrypt(encrypted_data)
+        decrypt(encrypted_data, key, iv)
     else:
         print('Err')
 #         exit()
